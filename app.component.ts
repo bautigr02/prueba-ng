@@ -6,18 +6,27 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  list = [ ];
+  list:any =[];
 
-  add(inputControl){
-    if (inputControl.value==''){
+  add(inputControl: { value: string; }){
+    if (inputControl.value=== ' ' ) {
       return;
     }
-    this.list.push(inputControl.value);
+    this.list.push(
+      {description: inputControl.value ,
+        completed: false
+      });
     inputControl.value= ' ';
   }
 
-  remove(item){
-    const index = this.list.findIndex(each => each===item);
+  remove(item: { description: any; }){
+    const index = this.list.findIndex((each: { description: any; }) => {
+      return each.description === item.description;
+    });
     this.list.splice(index,1);
+  }
+
+  toggle(item: { completed: boolean; }){
+    item.completed = !item.completed
   }
 }
